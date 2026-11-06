@@ -12,35 +12,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
 
-      - name: Install Dependencies & Quality Tools
-        run: |
-          python -m pip install --upgrade pip
-          pip install numpy pandas yfinance arch tensorflow keras scikit-learn statsmodels pytest pytest-cov flake8 mypy bandit
+    - name: Install Dependencies & Quality Tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install numpy pandas yfinance arch tensorflow keras scikit-learn statsmodels pytest pytest-cov flake8 mypy bandit
 
-      - name: Run Linting (Flake8)
-        run: |
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics || true
+    - name: Run Linting (Flake8)
+      run: |
+        flake8 core/ tests/ --count --select=E9,F63,F7,F82 --show-source --statistics || true
 
-      - name: Run Type Checking (Mypy)
-        run: |
-          set +e
-          mypy . --ignore-missing-imports
-          exit 0
+    - name: Run Type Checking (Mypy)
+      run: |
+        set +e
+        mypy core/ --ignore-missing-imports
+        exit 0
 
-      - name: Run Main Entry Point (Safe Mode)
-        run: |
-          export PYTHONPATH=src:.
-          python src/discretionary_macro_vol.py || python src/master_pipeline.py || python main.py || echo "Pipeline execution skipped"
+    - name: Run Main Entry Point (Safe Mode)
+      run: |
+        export PYTHONPATH=.
+        python main.py || python -c "import core.discretionary_macro_vol" || echo "Pipeline execution skipped"
 
-      - name: Run Pytest Suite (Safe Discovery)
-        run: |
-          export PYTHONPATH=src:.
-          if [ -d "tests" ]; then pytest -v --tb=short; else echo "No tests directory found, skipping unit tests safely."; exit 0; fi
+    - name: Run Pytest Suite (Safe Discovery)
+      run: |
+        export PYTHONPATH=.
+        if [ -d "tests" ]; then pytest -v --tb=short; else echo "No tests directory found, skipping unit tests safely."; exit 0; fi

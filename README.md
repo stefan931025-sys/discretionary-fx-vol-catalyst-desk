@@ -25,6 +25,7 @@ $$\Delta \text{IV}_t = \sigma_{t,\text{forecast}} - \sigma_{t,\text{market\_impl
 
 ### 2. Catalyst-Adjusted Conviction Score
 $$C_t = \tanh\left(\frac{\Delta \text{IV}_t}{\text{ATR}_t}\right) \cdot w_{\text{macro}}$$
+
 Where $w_{\text{macro}}$ scales down positioning density ahead of high-impact central bank announcements (FOMC, ECB, SARB).
 
 ---

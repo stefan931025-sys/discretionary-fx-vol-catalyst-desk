@@ -32,3 +32,7 @@ Where $w_{\text{macro}}$ scales down positioning density ahead of high-impact ce
 
 ## System Architecture & Data Flow
 
+```text
++-----------------------------------------------------------------------------------+
+|                        FX OPTIONS & MACRO EVENT CALENDARS                         |
+|            (Market Implied Volatilities, Spot FX, & Central Bank Dates)           

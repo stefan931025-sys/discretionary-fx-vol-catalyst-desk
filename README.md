@@ -1,14 +1,12 @@
 # Discretionary FX Volatility Catalyst Desk
 
-[![Discretionary FX Vol CI](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/stefan931025-sys/discretionary-fx-vol-catalyst-desk)
-[![Python Version](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![CI Workflow](https://github.com/stefan931025-sys/discretionary-fx-vol-catalyst-desk/actions/workflows/ci.yml/badge.svg)
+![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 A discretionary macro volatility overlay engine integrating quantitative GARCH(1,1) / LSTM implied volatility predictions with central bank catalyst event windows (Fed, ECB, SARB).
 
----
-
-## Architecture & Strategy
+## 🚀 Architecture & Strategy
 
 This framework bridges quantitative volatility forecasting with human discretionary execution:
 
@@ -18,21 +16,33 @@ This framework bridges quantitative volatility forecasting with human discretion
 
 ---
 
-## Mathematical Specifications
+## 📊 Mathematical Specifications
 
 ### 1. Implied Volatility Mispricing Spread
-$$\Delta \text{IV}_t = \sigma_{t,\text{forecast}} - \sigma_{t,\text{market\_implied}}$$
+
+$$\Delta \text{IV}_t = \sigma_{t,\text{forecast}} - \sigma_{t,\text{market}}$$
 
 ### 2. Catalyst-Adjusted Conviction Score
+
 $$C_t = \tanh\left(\frac{\Delta \text{IV}_t}{\text{ATR}_t}\right) \cdot w_{\text{macro}}$$
 
 Where $w_{\text{macro}}$ scales down positioning density ahead of high-impact central bank announcements (FOMC, ECB, SARB).
 
 ---
 
-## System Architecture & Data Flow
+## 📁 Repository Structure
 
 ```text
-+-----------------------------------------------------------------------------------+
-|                        FX OPTIONS & MACRO EVENT CALENDARS                         |
-|            (Market Implied Volatilities, Spot FX, & Central Bank Dates)           
+discretionary-fx-vol-catalyst-desk/
+├── .devcontainer/     # Devcontainer configuration for Codespaces
+├── .github/
+│   └── workflows/
+│       └── ci.yml     # GitHub Actions automated test workflow
+├── core/
+│   └── discretionary_macro_vol.py # Macro volatility overlay modules
+├── tests/
+│   └── test_macro_vol.py # Automated pytest suite
+├── main.py            # Main execution pipeline script
+├── repo_auditor.py    # Static AST analysis governance tool
+├── requirements.txt   # Python dependencies
+└── README.md          # System documentation
